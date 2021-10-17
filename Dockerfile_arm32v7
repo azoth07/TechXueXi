@@ -22,6 +22,7 @@ RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-proposed main multi
 RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-security main multiverse restricted universe
 RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-updates main multiverse restricted universe 
 RUN apt-get update
+RUN apt-get upgrade
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
