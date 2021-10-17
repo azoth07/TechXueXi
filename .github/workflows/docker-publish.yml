@@ -18,7 +18,7 @@ env:
   # Use docker.io for Docker Hub if empty
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-act -P ubuntu-latest=catthehacker/ubuntu:act-latest
+
 
 jobs:
   build:
@@ -62,7 +62,7 @@ jobs:
         run: |
               
               docker buildx create --use
-              docker buildx build --platform linux/amd64 \
+              docker buildx build --platform linux/arm/v7 \
                       -t techxuexi/techxuexi-amd64:${GITHUB_REF##*/}${{ github.run_number }} \
                       --push \
                       -f ./Dockerfile_arm32v7 .
