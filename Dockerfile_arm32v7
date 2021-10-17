@@ -9,6 +9,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
 #RUN rm /var/cache/apt/archives/lock
 #RUN rm /var/lib/dpkg/lock
+RUN apt-get update
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 RUN Codename=$( (lsb_release -a)|awk '{print $2}'|tail -n 1 )
 RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename main multiverse restricted universe
