@@ -11,17 +11,16 @@ COPY --from=builder qemu-arm-static /usr/bin
 #RUN rm /var/lib/dpkg/lock
 RUN apt-get update
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
-RUN Codename=$( (lsb_release -a)|awk '{print $2}'|tail -n 1 )
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename main multiverse restricted universe
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename-backports main multiverse restricted universe
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename-proposed main multiverse restricted universe
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename-security main multiverse restricted universe
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ $Codename-updates main multiverse restricted universe
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename main multiverse restricted universe
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-backports main multiverse restricted universe
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-proposed main multiverse restricted universe
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-security main multiverse restricted universe
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ $Codename-updates main multiverse restricted universe 
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ focal main multiverse restricted universe
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ focal-backports main multiverse restricted universe
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main multiverse restricted universe
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ focal-security main multiverse restricted universe
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ focal-updates main multiverse restricted universe
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ focal main multiverse restricted universe
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main multiverse restricted universe
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main multiverse restricted universe
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main multiverse restricted universe
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main multiverse restricted universe 
 RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
