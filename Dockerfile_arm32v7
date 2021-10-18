@@ -11,12 +11,12 @@ RUN echo "[Info] 正在备份默认apt源..."
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak
 RUN chmod +x /etc/apt/sources.list
 RUN echo "[Info] 正在替换apt源为清华apt源..."
-RUN echo deb http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse > /etc/apt/sources.list
-RUN echo deb http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse > /etc/apt/sources.list
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
+RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse >> /etc/apt/sources.list
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
+RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install gnupg
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com
