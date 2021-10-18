@@ -12,6 +12,8 @@ COPY --from=builder qemu-arm-static /usr/bin
 
 RUN apt-get update
 RUN apt-get upgrade
+RUN dpkg -i google*.deb
+RUN apt-get -f install
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-chromedriver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
