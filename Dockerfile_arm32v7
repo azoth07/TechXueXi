@@ -13,7 +13,9 @@ RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restri
 RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-security main restricted universe multiverse > /etc/apt/sources.list
 RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-updates main restricted universe multiverse > /etc/apt/sources.list
 RUN echo deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal-backports main restricted universe multiverse > /etc/apt/sources.list
-
+RUN gpg --keyserver keyserver.ubuntu.com --recv 3B4FE6ACC0B21F32
+RUN gpg --export --armor 3B4FE6ACC0B21F32
+RUN apt-key add -
 RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
