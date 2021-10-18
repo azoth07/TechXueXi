@@ -14,7 +14,9 @@ RUN echo deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted
 RUN echo deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
 RUN echo deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse >> /etc/apt/sources.list
 RUN echo deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com
 RUN echo "[Info] 正在更新源..."
+RUN apt-get update
 RUN apt update
 RUN echo "[Info] 正在更新软件..."
 RUN apt upgrade -y
