@@ -29,7 +29,11 @@ jobs:
       packages: write
 
     steps:
-
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: azoth07/onetech-xuexi
       - name: Docker Setup QEMU
         # You may pin to the exact commit or the version.
         # uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480
