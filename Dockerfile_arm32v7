@@ -7,26 +7,8 @@ ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 COPY --from=builder qemu-arm-static /usr/bin  
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
-RUN echo "[Info] 正在备份默认apt源..."
-RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak
-RUN chmod +x /etc/apt/sources.list
-RUN echo "[Info] 正在替换apt源为清华apt源..."
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse > /etc/apt/sources.list
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse >> /etc/apt/sources.list
-RUN echo deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install gnupg
-RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com
-RUN apt-get update
-RUN echo "[Info] 正在更新源..."
-RUN apt update
-RUN echo "[Info] 正在更新软件..."
-RUN apt upgrade -y
 #RUN apt-get update
-RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
+RUN apt-get install -y wget unzip libzbar0 git cron 
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
 ENV TZ=Asia/Shanghai
