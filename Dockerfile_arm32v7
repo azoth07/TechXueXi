@@ -10,7 +10,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 COPY source.sh /xuexi/source.sh
 WORKDIR /xuexi
 RUN chmod +x ./source.sh
-RUN ./source.sh
+RUN bash source.sh
 RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
