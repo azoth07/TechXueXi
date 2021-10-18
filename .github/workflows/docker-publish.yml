@@ -24,7 +24,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: whatever4711/armbian-build
+    container: arm32v7/ubuntu
     permissions:
       contents: read
       packages: write
