@@ -9,11 +9,9 @@ COPY --from=builder qemu-arm-static /usr/bin
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
 #RUN rm /var/cache/apt/archives/lock
 #RUN rm /var/lib/dpkg/lock
+RUN echo "deb http://security.debian.org/debian-security stretch/updates main " >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get upgrade
-RUN dpkg -i google*.deb
-RUN apt-get -f install
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-chromedriver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
