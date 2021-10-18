@@ -24,7 +24,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: shuoshuren123/chromedriver
     permissions:
       contents: read
       packages: write
