@@ -56,7 +56,7 @@ jobs:
         with:
           # QEMU static binaries Docker image (e.g. tonistiigi/binfmt:latest)
           image: tonistiigi/binfmt:latest
-          platforms: al
+          platforms: all
 
           #  Platforms to install (e.g. arm64,riscv64,arm)
           # platforms: arm64,arm/v7,amd64
