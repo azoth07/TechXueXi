@@ -12,7 +12,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 RUN apt-get update
 #RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
 #RUN mkdir /etc/lib/dpkg/info
-RUN apt-get clean
+#RUN apt-get clean
 RUN apt-get install -f
 RUN dpkg --configure -a
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
