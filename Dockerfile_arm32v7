@@ -9,14 +9,14 @@ COPY --from=builder qemu-arm-static /usr/bin
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
 #COPY ./sources.list .
 #RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
-RUN apt-get update
-RUN apt-get autoremove dpkg
-RUN apt-get install dpkg 
+#RUN apt-get update
+#RUN apt-get autoremove dpkg
+#RUN apt-get install dpkg 
 #RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
 #RUN mkdir /etc/lib/dpkg/info
 #RUN apt-get clean
 #RUN apt-get install -f
-RUN dpkg --configure -a
+#RUN dpkg --configure -a
 
 #RUN apt-get --reinstall install `dpkg --get-selections | grep '[[:space:]]install' | cut -f1`#RUN rm /var/lib/dpkg/updates/*
 RUN apt-get update
