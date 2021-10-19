@@ -15,6 +15,9 @@ RUN apt-get update
 #RUN apt-get clean
 RUN apt-get install -f
 RUN dpkg --configure -a
+RUN rm /var/lib/dpkg/updates/*
+RUN apt-get update
+RUN apt-get upgrade
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
