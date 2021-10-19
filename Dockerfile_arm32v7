@@ -1,4 +1,4 @@
-FROM ubuntu AS builder
+FROM ubuntu 
 RUN apt-get update
 RUN apt-get install qemu
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v6.0.0%2Bbalena1/qemu-6.0.0.balena1-arm.tar.gz
