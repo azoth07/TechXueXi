@@ -12,7 +12,7 @@ COPY ./sources.list .
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 
 RUN apt-get update
-RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
+RUN apt-get install -y wget unzip libzbar0 git cron
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
 ENV TZ=Asia/Shanghai
@@ -28,6 +28,8 @@ COPY requirements.txt /xuexi/requirements.txt
 COPY run.sh /xuexi/run.sh 
 COPY start.sh /xuexi/start.sh 
 RUN pip install -r /xuexi/requirements.txt
+RUN cd /xuexi/; wget http://launchpadlibrarian.net/361669488/chromium-chromedriver_65.0.3325.181-0ubuntu0.14.04.1_armhf.deb; dpkg -i chromium-chromedriver_65.0.3325.181-0ubuntu0.14.04.1_armhf.deb; apt-get -fy install;  rm -f chromium-chromedriver_65.0.3325.181-0ubuntu0.14.04.1_armhf.deb; chromedriver --version; chromium --version
+#RUN cd /xuexi/; wget -O chromedriver_linux64_92.0.4515.107.zip http://npm.taobao.org/mirrors/chromedriver/92.0.4515.107/chromedriver_linux64.zip; unzip chromedriver_linux64_92.0.4515.107.zip; chmod 755 chromedriver; ls -la; ./chromedriver --version
 WORKDIR /xuexi
 RUN chmod +x ./run.sh
 RUN chmod +x ./start.sh
