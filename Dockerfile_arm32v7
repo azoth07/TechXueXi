@@ -2,11 +2,15 @@ FROM alpine AS builder
 
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
-FROM owncloud/ubuntu:latest
+FROM arm32v7/python:bullseye
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 COPY --from=builder qemu-arm-static /usr/bin 
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
+RUN cd /tmp
+RUN apt-get download dpkg
+RUN dpkg -x dpkg_1.17.27_armhf.deb dpkg-files
+RUN cp /tmp/dpkg-files/usr/bin/dpkg-split /usr/bin
 #COPY ./sources.list .
 #RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 RUN apt-get update
