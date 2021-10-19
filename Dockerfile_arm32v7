@@ -10,7 +10,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 COPY ./sources.list .
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 RUN apt-get update
-RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
+#RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
 RUN mkdir /etc/lib/dpkg/info
 RUN apt-get install -f
 RUN dpkg --configure -a
