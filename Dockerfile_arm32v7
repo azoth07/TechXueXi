@@ -1,9 +1,9 @@
-FROM alpine AS builder
-#RUN apt-get update
-#RUN apt-get install qemu
+FROM ubuntu AS builder
+RUN apt-get update
+RUN apt-get install qemu
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v6.0.0%2Bbalena1/qemu-6.0.0.balena1-arm.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
-FROM arm32v7/python:3.7
+#FROM arm32v7/python:3.7
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 COPY --from=builder qemu-arm-static /usr/bin  
@@ -11,6 +11,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 #COPY ./sources.list .
 #RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 RUN apt-get update
+RUN apt-get install python3.7
 #RUN apt-get autoremove dpkg
 #RUN apt-get install dpkg 
 #RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
