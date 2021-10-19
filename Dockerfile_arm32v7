@@ -2,7 +2,7 @@ FROM alpine AS builder
 
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
-FROM arm32v7/python:3.10.0-bullseye
+FROM arm32v7/debian:bullseye
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 COPY --from=builder qemu-arm-static /usr/bin 
@@ -10,6 +10,7 @@ COPY --from=builder qemu-arm-static /usr/bin
 #COPY ./sources.list .
 #RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 RUN apt-get update
+RUN apt-get install -y python
 #RUN apt-get autoremove dpkg
 #RUN apt-get install dpkg 
 #RUN mv /etc/lib/dpkg/info /etc/lib/dpkg/info-old
