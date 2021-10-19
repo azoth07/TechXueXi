@@ -1,14 +1,11 @@
 FROM alpine AS builder
-RUN apk update
-RUN apk add curl
-WORKDIR /qemu
-# downloaded here...
-RUN curl -L https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz | tar zxvf - -C . && mv qemu-3.0.0+resin-arm/qemu-arm-static .
 
-#FROM arm32v7/python:3.7
+ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v3.0.0%2Bresin/qemu-3.0.0+resin-arm.tar.gz
+RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
+FROM arm32v7/python:latest
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
-COPY --from=builder qemu-arm-static /usr/bin  
+COPY --from=builder qemu-arm-static /usr/bin 
 # 增加适配玩客云arm7 32位环境 chrome默认安装 90版本
 #COPY ./sources.list .
 #RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
