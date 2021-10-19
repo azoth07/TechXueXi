@@ -55,11 +55,11 @@ jobs:
         uses: docker/setup-qemu-action@v1.2.0
         with:
           # QEMU static binaries Docker image (e.g. tonistiigi/binfmt:latest)
-          image: tonistiigi/binfmt:latest
-          platforms: all
+          # image: tonistiigi/binfmt:latest
+          #platforms: all
 
           # Platforms to install (e.g. arm64,riscv64,arm)
-          #platforms: arm64,arm/v7,amd64
+          platforms: arm64,arm/v7,amd64
  
       - name: Build and push Docker image
         id: buildx
