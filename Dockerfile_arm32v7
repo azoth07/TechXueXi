@@ -11,12 +11,7 @@ COPY ./sources.list .
 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && mv ./sources.list /etc/apt/
 
-RUN apt-get -o Acquire::Check-Valid-Until=false update \
-    && apt-get install \
-    --no-install-recommends --yes \
-    build-essential libpq-dev cron git \
-    python3-dev --yes
-
+RUN apt-get update
 RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
