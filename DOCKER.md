@@ -1,5 +1,7 @@
 **[交流群地址及说明](https://github.com/TechXueXi/TechXueXi/issues/14)**
 
+官方网站： https://techxuexi.js.org/
+
 #### [其他运行方式](https://github.com/TechXueXi/TechXueXi/blob/dev/%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-%E4%B8%8B%E8%BD%BD%E6%96%B9%E5%BC%8F.md)
 
 #### 镜像地址： https://hub.docker.com/u/techxuexi/
@@ -7,6 +9,15 @@
 **重要公告**： [公告栏（国内打不开）](https://t.me/s/techxuexi_notice) || [公告栏（国内可以打开）](https://notice.techxuexi.workers.dev)
 
 **警告：如您不熟悉，请使用源码运行的方式**
+
+## 有疑问？
+遇到问题，请试着按如下步骤解决：
+
+1. 仔细阅读过 `README.md` ， `使用方法-更新方法-下载方式.md` ， `DOCKER.md` 这些说明
+2. 查看/搜索所有已有 issue，无论是open还是close的
+3. 通过搜索引擎搜索，尝试不同的关键词 www.google.com www.baidu.com
+4. 到提供的在线聊天室询问 (聊天室说明： https://github.com/TechXueXi/TechXueXi/issues/14 )
+5. 提新 issue ，关注邮箱有关这个 issue 的提醒。
 
 # 配置文件
 
@@ -28,16 +39,16 @@
 
 > 2021 年 9 月 25 日起 arm 和 amd 地址分开，请重新配置 docker
 
-arm64
-
-```
-docker pull techxuexi/techxuexi-arm64v8:{tag}
-```
-
-amd64
+amd64（一般64位电脑，服务器）
 
 ```
 docker pull techxuexi/techxuexi-amd64:{tag}
+```
+
+arm64（树莓派等）
+
+```
+docker pull techxuexi/techxuexi-arm64v8:{tag}
 ```
 
 目前最新的 tag 请前往 https://hub.docker.com/u/techxuexi/ 查询
@@ -92,7 +103,7 @@ Pushmode=1
 
   > 1 钉钉
 
-  > 2 微信（并未实现）
+  > 2 微信（并未实现， https://github.com/orgs/TechXueXi/projects/2#card-66789077 ）
 
   > 3 Server 酱
 
@@ -111,6 +122,9 @@ Pushmode=1
 - pullbranche 项目分支，默认是`dev`，后续可能会变为`master`
 - islooplogin 循环参数，默认`False`，当设置为`True`的时候，如果扫码超时会一直尝试循环获取新的扫码，考虑到微信公众号推送有次数限制，慎用
 - ZhuanXiang 是否进行专项答题，设置`True`则开始答题，如果经常遇到视频题目，或者经常答题失败，建议关闭
+- MaxScore 达到指定分数停止学习（未实现，开发团队成员可查看 https://github.com/orgs/TechXueXi/projects/2#card-70976956 ）
+- **配置项（不是环境变量）** answer_error_max，默认值100，可以修改找不到答案时尝试的次数，仅Docker中有效
+- **没有找到的环境变量，请查看上方提到过的默认配置文件，可能做成了配置项**
 
 ```
 CRONTIME=Cron参数，默认是30 9 * * *，即每天早上9:30执行  ,可以把Cron表达式放到这里去验证 https://crontab.guru/
@@ -224,7 +238,7 @@ services:
 
 `/add` 添加新账号，只添加账号，不会立即学习
 
-`/update` 更新本地代码
+`/update` 更新本地代码， `/update`指令支持参数 如`/update --rebase`
 
 **注意，用学习强国官方软件及网页时关闭翻墙软件**。但是telegram推送需要翻墙。
 
