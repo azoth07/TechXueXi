@@ -69,7 +69,7 @@ jobs:
               docker buildx create --use
 
               docker buildx build --platform linux/arm/v7 \
-                      -t techxuexi/techxuexi-arm32v7:${GITHUB_REF##*/}${{ github.run_number }} \
+                      -t azoth07/onetech-xuexi:${GITHUB_REF##*/}${{ github.run_number }} \
                       --push \
                       -f ./Dockerfile_arm32v7 .
 
