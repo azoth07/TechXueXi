@@ -24,14 +24,7 @@ ENV islooplogin=False
 ENV Sourcepath="https://github.com.cnpmjs.org/TechXueXi/TechXueXi.git"
 ENV CRONTIME="30 9 * * *"
 # 安装 supervisor
-#RUN apt-get install -y supervisor \
-	&& mkdir -p /home/work/_app/supervisord/conf.d/ /home/work/_logs/supervisord/ \
-	&& echo_supervisord_conf > /home/work/_app/supervisord/supervisord.ini \
-	&& echo "[include]" >> /home/work/_app/supervisord/supervisord.ini \
-    && echo "files = /home/work/_app/supervisord/conf.d/*.ini" >> /home/work/_app/supervisord/supervisord.ini \
-    && sed -i "s/\/tmp\/supervisord.pid/\/var\/run\/supervisord.pid/" /home/work/_app/supervisord/supervisord.ini \
-    && sed -i "s/logfile=\/tmp\/supervisord.log/logfile=\/home\/work\/_logs\/supervisord\/supervisord.log/" /home/work/_app/supervisord/supervisord.ini \
-    && sed -i "s/\/etc\/supervisor\/supervisord.conf/\/home\/work\/_app\/supervisord\/supervisord.ini/" /etc/init.d/supervisor
+
 # RUN rm -f /xuexi/config/*; ls -la
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor /usr/src/app
