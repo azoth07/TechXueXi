@@ -29,9 +29,9 @@ ENV CRONTIME="30 9 * * *"
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor /usr/src/app
 
-COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisord.conf  /etc/supervisord.conf
 
-VOLUME ["/etc/supervisor/conf.d", "/usr/src/app"]
+VOLUME ["/etc/conf.d", "/usr/src/app"]
 
 EXPOSE 9001
 
