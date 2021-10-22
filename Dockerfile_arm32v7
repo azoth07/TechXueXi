@@ -26,6 +26,11 @@ ENV CRONTIME="30 9 * * *"
 # 安装 supervisor
 
 # RUN rm -f /xuexi/config/*; ls -la
+
+RUN chmod 777 /run
+RUN chmod 777 /var/log
+RUN touch /var/run/supervisor.sock
+RUN chmod 777 /var/run/supervisor.sock
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor /usr/src/app
 
