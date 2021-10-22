@@ -10,11 +10,9 @@ COPY --from=builder qemu-arm-static /usr/bin
 RUN ln -s /usr/bin/dpkg-split /usr/sbin/dpkg-split
 RUN ln -s /usr/bin/dpkg-deb /usr/sbin/dpkg-deb
 RUN ln -s /bin/tar /usr/sbin/tar
-VOLUME ["/etc/supervisor/conf.d", "/var/log/supervisor/"]
-COPY ./supervisor/conf.d/ /etc/supervisor/conf.d/
 RUN apt-get update
 RUN apt-get upgrade
-RUN apt-get install -y wget unzip libzbar0 git cron supervisor chromium-driver; chromedriver --version; which chromedriver; chromium --version
+RUN apt-get install -y wget unzip libzbar0 git cron chromium-driver; chromedriver --version; which chromedriver; chromium --version
 RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
 RUN apt-get install libjpeg-dev zlib1g-dev 
 ENV TZ=Asia/Shanghai
@@ -25,6 +23,15 @@ ENV Pushmode=1
 ENV islooplogin=False
 ENV Sourcepath="https://github.com.cnpmjs.org/TechXueXi/TechXueXi.git"
 ENV CRONTIME="30 9 * * *"
+# 安装 supervisor
+RUN apt-get install -y supervisor \
+	&& mkdir -p /home/work/_app/supervisord/conf.d/ /home/work/_logs/supervisord/ \
+	&& echo_supervisord_conf > /home/work/_app/supervisord/supervisord.ini \
+	&& echo "[include]" >> /home/work/_app/supervisord/supervisord.ini \
+    && echo "files = /home/work/_app/supervisord/conf.d/*.ini" >> /home/work/_app/supervisord/supervisord.ini \
+    && sed -i "s/\/tmp\/supervisord.pid/\/var\/run\/supervisord.pid/" /home/work/_app/supervisord/supervisord.ini \
+    && sed -i "s/logfile=\/tmp\/supervisord.log/logfile=\/home\/work\/_logs\/supervisord\/supervisord.log/" /home/work/_app/supervisord/supervisord.ini \
+    && sed -i "s/\/etc\/supervisor\/supervisord.conf/\/home\/work\/_app\/supervisord\/supervisord.ini/" /etc/init.d/supervisor
 # RUN rm -f /xuexi/config/*; ls -la
 COPY requirements.txt /xuexi/requirements.txt
 COPY run.sh /xuexi/run.sh 
