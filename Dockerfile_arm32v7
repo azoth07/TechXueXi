@@ -10,6 +10,8 @@ COPY --from=builder qemu-arm-static /usr/bin
 RUN ln -s /usr/bin/dpkg-split /usr/sbin/dpkg-split
 RUN ln -s /usr/bin/dpkg-deb /usr/sbin/dpkg-deb
 RUN ln -s /bin/tar /usr/sbin/tar
+VOLUME ["/etc/supervisor/conf.d", "/var/log/supervisor/"]
+COPY ./supervisor/conf.d/ /etc/supervisor/conf.d/
 RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y wget unzip libzbar0 git cron supervisor chromium-driver; chromedriver --version; which chromedriver; chromium --version
