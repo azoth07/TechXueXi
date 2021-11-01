@@ -3,6 +3,7 @@ from pdlearn.pluspush import PlusPushHandler
 from pdlearn.fangtang import FangtangHandler
 from pdlearn.dingding import DingDingHandler
 from pdlearn.telegram import TelegarmHandler
+from pdlearn.wechat import WechatHandler
 from pdlearn.web import WebHandler
 import io
 from PIL import Image
@@ -23,6 +24,7 @@ lock = False
 stime = False
 single = False
 tg_bot = TelegarmHandler
+wechat = WechatHandler
 web = WebHandler()
 push_msg = ""
 
@@ -31,12 +33,12 @@ def init_global():
     """
     初始化全局变量
     """
-    global nohead, islooplogin, single, scheme, pushmode, accesstoken, secret, zhuanxiang, is_init, lock, stime, tg_bot
+    global nohead, islooplogin, single, scheme, pushmode, accesstoken, secret, zhuanxiang, is_init, lock, stime, tg_bot, wechat
     if os.getenv('Nohead') == "True":
         nohead = True
     else:
         nohead = cfg_get("addition.Nohead", False)
-        
+
     if os.getenv('islooplogin') == "True":
         islooplogin = True
 
@@ -50,8 +52,8 @@ def init_global():
 
     if os.getenv("Scheme") != None:
         scheme = os.getenv("Scheme")
-    elif pushmode in ["5"]: # telegram 默认开启我们提供的
-        scheme = 'https://techxuexi.js.org/jump/techxuexi-20211023.html?'
+    # elif pushmode in ["5"]: # telegram 默认开启我们提供的
+    #    scheme = 'https://techxuexi.js.org/jump/techxuexi-20211023.html?'
 
     if os.getenv('AccessToken'):
         accesstoken = os.getenv('AccessToken')
@@ -76,9 +78,12 @@ def init_global():
     if pushmode == "5":
         tg_bot = TelegarmHandler(
             accesstoken, secret, cfg_get("addition.telegram.proxy"))
+    if pushmode == "2":
+        wechat = WechatHandler()
     is_init = True
 
-def pushprint(text):
+
+def pushprint(text, chat_id=None):
     """
     推送或者显示
     """
@@ -92,6 +97,10 @@ def pushprint(text):
         if pushmode == "1":
             push = DingDingHandler(accesstoken, secret)
             push.ddtextsend(text)
+        elif pushmode == "2":
+            if chat_id:
+                chat_id = wechat.get_opendid_by_uid(chat_id)
+            wechat.send_text(text, uid=chat_id)
         elif pushmode == "3":
             push = FangtangHandler(accesstoken)
             push.fttext(text)
