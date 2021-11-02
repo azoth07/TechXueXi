@@ -1,8 +1,8 @@
-#!/bin/sh
-if ! git -C /xuexi/code/TechXueXi config pull.ff only; then
-    rm -rf /xuexi/code/TechXueXi
-    cd /xuexi/code/ && git clone -b ${pullbranche} ${Sourcepath}
-fi
+#!/bin/bash
+#if ! git -C /xuexi/code/TechXueXi config pull.ff only; then
+#    rm -rf /xuexi/code/TechXueXi
+#    cd /xuexi/code/ && git clone -b ${pullbranche} ${Sourcepath}
+#fi
 printenv >>/etc/environment
 touch /var/log/cron.log
 
