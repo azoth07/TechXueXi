@@ -1,38 +1,37 @@
-from typing import List, Any
+import base64  # 解码二维码图片
+import io
+import os
+import random
+import re
+import string
+import time
+from typing import Any, List
+from urllib.parse import quote, quote_plus
 
+import lxml
+import requests
 import selenium
+from bs4 import BeautifulSoup
+from PIL import Image
+from pyzbar import pyzbar
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common import exceptions
 from selenium.webdriver.chrome.options import Options
-from pdlearn import user_agent
-from pdlearn import user
-from pdlearn import auto
-from pdlearn.dingding import DingDingHandler
-from pdlearn.config import cfg_get
-from bs4 import BeautifulSoup
-import string
-import lxml
-import os
-import time
-import requests
-import random
-from urllib.parse import quote, quote_plus
-import re
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.common import exceptions
-from pdlearn import globalvar as gl
-from pyzbar import pyzbar
-import io
-from PIL import Image
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-import base64  # 解码二维码图片
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from webServerConf import WebMessage, WebQrUrl, web_db
+
+from pdlearn import auto
+from pdlearn import globalvar as gl
+from pdlearn import user, user_agent
+from pdlearn.web import WebHandler
+from pdlearn.config import cfg_get
+from pdlearn.dingding import DingDingHandler
 # from pdlearn.qywx import WeChat  # 使用微信发送二维码图片到手机
-from webServerConf import web_db, WebQrUrl, WebMessage
+
 
 
 def decode_img(data):
@@ -62,6 +61,7 @@ class title_of_login:
 class Mydriver:
 
     def __init__(self, noimg=True, nohead=True):
+        self.web = WebHandler()
         nohead = gl.nohead
         mydriver_log = ''
         try:
@@ -147,7 +147,7 @@ class Mydriver:
 
     def get_cookie_from_network(self, chat_id=None):
         print("正在打开二维码登陆界面,请稍后")
-        web_db.session.add(WebMessage('正在打开二维码登陆界面,请稍后'))
+        self.web_log('正在打开二维码登陆界面,请稍后')
         self.driver.get("https://pc.xuexi.cn/points/login.html")
         try:
             remover = WebDriverWait(self.driver, 30, 0.2).until(
@@ -177,7 +177,6 @@ class Mydriver:
         # 取出iframe中二维码，并发往钉钉
         if gl.nohead == True or cfg_get("addition.SendLoginQRcode", 0) == 1:
             print("二维码将发往机器人...\n" + "=" * 60)
-
             qrurl, qcbase64 = self.sendmsg(chat_id)
 
         # 扫码登录后删除二维码和登录链接 准备
@@ -191,22 +190,6 @@ class Mydriver:
         # print(' ----------------------------------------------------------------')
         # print(web_msg)
         # print(web_db.session.query(WebMessage).all())
-
-        # 扫码登录后删除二维码和登录链接 准备
-        qcbase64 = self.getQRcode()
-        qrurl = WebQrUrl.query.filter_by(url=qcbase64).first()
-
-        if gl.scheme:
-            url = gl.scheme+quote_plus(decode_img(qcbase64))
-        else:
-            url = decode_img(qcbase64)
-        msg_url = WebMessage.query.filter_by(text=url).first()
-
-        # print(' ----------------------------------------------------------------')
-        # print(qrurl)
-        # print(' ----------------------------------------------------------------')
-        # print(msg_url)
-
 
         # try:
         #     # 取出iframe中二维码，并发往方糖，拿到的base64没办法直接发钉钉，所以发方糖
@@ -239,6 +222,7 @@ class Mydriver:
             web_msg and web_db.session.delete(web_msg)
             web_db.session.commit()
             return cookies
+            
         except Exception as e:
             print("扫描二维码超时... 错误信息：" + str(e))
             self.web_log("扫描二维码超时... 错误信息：" + str(e))
@@ -259,10 +243,8 @@ class Mydriver:
             auto.prompt("按回车键退出程序. ")
             exit()
 
-
     def web_log(self, send_log):
-        web_db.session.add(WebMessage(send_log))
-        web_db.session.commit()
+        self.web.add_message(send_log)
 
     def sendmsg(self, chat_id=None):
         qcbase64 = self.getQRcode()
@@ -271,17 +253,11 @@ class Mydriver:
         # 发送链接
         qrurl = ''
         if gl.scheme:
-#<<<<<<< developing
-#            qrurl = gl.scheme+quote_plus(decode_img(qcbase64))
-#        else:
-#            qrurl = decode_img(qcbase64)
-#        gl.pushprint(qrurl)
-#        return qrurl, qcbase64
-#=======
-#            gl.pushprint(gl.scheme+quote_plus(decode_img(qcbase64)), chat_id)
-#        else:
-#            gl.pushprint(decode_img(qcbase64), chat_id)
-#>>>>>>> dev
+            qrurl = gl.scheme+quote_plus(decode_img(qcbase64))
+        else:
+            qrurl = decode_img(qcbase64)
+        gl.pushprint(qrurl, chat_id)
+        return qrurl, qcbase64
 
     def getQRcode(self):
         try:
