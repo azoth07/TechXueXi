@@ -50,6 +50,7 @@ stderr_logfile=/xuexi/user/web_listener.log
 
 EOF
 
+mkdir -p /xuexi/user
 cp -r /etc/supervisord.conf /xuexi/user/
 #systemctl enable supervisord
 #supervisorctl stop all
