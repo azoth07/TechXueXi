@@ -110,6 +110,7 @@ def polling():
         bot.polling(non_stop=True, timeout=120)
     except Exception as e:
         print("telegtram listener reconnecting...")
+    finally: #资源回收
         gc.collect() #资源回收
         polling()
 
