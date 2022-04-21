@@ -67,7 +67,10 @@ jobs:
         run: |
               
               docker buildx create --use
-
+              docker buildx build --platform linux/amd64 \
+                      -t techxuexi/techxuexi-amd64:${GITHUB_REF##*/}${{ github.run_number }} \
+                      --push \
+                      -f ./Dockerfile .
               docker buildx build --platform linux/arm/v7 \
                       -t azoth07/onetech-xuexi:${GITHUB_REF##*/}${{ github.run_number }} \
                       --push \
