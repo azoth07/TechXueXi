@@ -71,10 +71,10 @@ jobs:
                       -t azoth07/onetech-xuexi:${GITHUB_REF##*/}${{ github.run_number }} \
                       --push \
                       -f ./Dockerfile .
-              docker buildx build --platform linux/arm/v7 \
-                      -t azoth07/onetech-xuexi:${GITHUB_REF##*/}${{ github.run_number }} \
-                      --push \
-                      -f ./Dockerfile_arm32v7 .
+ #             docker buildx build --platform linux/arm/v7 \
+ #                     -t azoth07/onetech-xuexi:${GITHUB_REF##*/}${{ github.run_number }} \
+ #                     --push \
+ #                     -f ./Dockerfile_arm32v7 .
 
       #- name: Sleep for 30 seconds 
       #  uses: jakejarvis/wait-action@master         
