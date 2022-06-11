@@ -54,6 +54,6 @@ mkdir -p /xuexi/user
 cp -r /etc/supervisord.conf /xuexi/user/
 #systemctl enable supervisord
 #supervisorctl stop all
-supervisord -c /xuexi/user/supervisord.conf
+#supervisord -c /xuexi/user/supervisord.conf
 #supervisorctl start xuexitg
 #supervisorctl start all
