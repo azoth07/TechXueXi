@@ -243,6 +243,8 @@ def answer_question(quiz_type, cookies, scores, score_all, quiz_xpath, category_
                         break
                 if tips:
                     if "填空题" in category:
+                        while '' in tips:
+                            tips.remove('')
                         answer = tips
                         if quiz_type != "zhuanxiang":
                             driver_ans.fill_in_blank(answer)
