@@ -1,13 +1,11 @@
 
-FROM python:3.10-slim
-ARG usesource="https://github.com/TechXueXi/TechXueXi.git"
+FROM python:3.7-slim
+ARG usesource="https://hub.fastgit.xyz/TechXueXi/TechXueXi.git"
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 ENV Sourcepath=${usesource}
 RUN apt-get update
-RUN apt-get install -y wget unzip libzbar0 git cron supervisor chromium-driver; chromedriver --version; which chromedriver; chromium --version
-RUN apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev python3-pip
-RUN apt-get install libjpeg-dev zlib1g-dev 
+RUN apt-get install -y wget unzip libzbar0 git cron supervisor
 ENV TZ=Asia/Shanghai
 ENV AccessToken=
 ENV Secret=
@@ -22,12 +20,23 @@ COPY start.sh /xuexi/start.sh
 COPY supervisor.sh /xuexi/supervisor.sh
 
 RUN pip install -r /xuexi/requirements.txt
-
+RUN cd /xuexi/; \
+  wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_92.0.4515.159-1_amd64.deb; \
+  dpkg -i google-chrome-stable_92.0.4515.159-1_amd64.deb; \
+  apt-get -fy install; \
+  google-chrome --version; \
+  rm -f google-chrome-stable_92.0.4515.159-1_amd64.deb
+RUN cd /xuexi/; \
+  wget -O chromedriver_linux64_92.0.4515.107.zip http://npm.taobao.org/mirrors/chromedriver/92.0.4515.107/chromedriver_linux64.zip; \
+  unzip chromedriver_linux64_92.0.4515.107.zip; \
+  chmod 755 chromedriver; \
+  ls -la; \
+  ./chromedriver --version
+RUN apt-get clean
 WORKDIR /xuexi
-RUN chmod +x ./supervisor.sh;./supervisor.sh
-RUN chmod +x ./start.sh
 RUN chmod +x ./run.sh
-
+RUN chmod +x ./start.sh
+RUN chmod +x ./supervisor.sh;./supervisor.sh
 RUN mkdir code
 WORKDIR /xuexi/code
 RUN git clone -b ${usebranche} ${usesource}; cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi;
